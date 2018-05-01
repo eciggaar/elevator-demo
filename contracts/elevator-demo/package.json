@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "MakerLab blockchain demo ",
   "scripts": {
+    "prepublish": "mkdirp ./dist && composer archive create -t dir -n . -a ./dist/elevator-demo.bna",
     "test": "mocha --recursive"
   },
   "author": "Edward Ciggaar",
