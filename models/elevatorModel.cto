@@ -1,0 +1,58 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace composer.elevator
+import composer.base.Company
+
+participant Customer identified by customerID extends Company {
+  o String customerID
+}
+
+participant Manufacturer identified by manufacturerID extends Company {
+  o String manufacturerID
+}
+
+participant MaintenanceFirm identified by maintenanceFirmID extends Company {
+  o String maintenanceFirmID
+}
+
+asset Elevator identified by elevatorID {
+  o String elevatorID
+  o String type
+  o String model
+  --> Customer customer
+  --> Manufacturer manufacturer
+  --> MaintenanceSheet sheet
+}
+
+asset MaintenanceSheet identified by sheetID {
+  o String sheetID
+  o DateTime startTime optional
+  o DateTime stopTime optional
+  o Double timeInMaintenance optional
+  o String elevatorID optional
+  o String reason
+  --> MaintenanceFirm maintenanceFirm
+}
+
+transaction Maintenance {
+  o Boolean indicator
+  o DateTime maintenanceTimestamp
+  o String reason optional
+  --> Elevator assetID
+}
+
+event MaintenanceEvent {
+  o MaintenanceSheet sheet
+}

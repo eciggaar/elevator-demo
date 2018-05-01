@@ -1,0 +1,53 @@
+/**
+ * Sample access control list.
+ */
+ rule MaintenanceFirmCanViewOwnData {
+    description: "Allow maintenance firm to view own data"
+    participant(m): "composer.elevator.MaintenanceFirm"
+    operation: ALL
+    resource(v): "composer.elevator.MaintenanceFirm"
+    condition: (v.getIdentifier() == m.getIdentifier())
+    action: ALLOW
+ }
+
+ rule MaintenanceFirmCanViewOwnSheets {
+    description: "Allow maintenance firm to only see their own sheets"
+    participant(m): "composer.elevator.MaintenanceFirm"
+    operation: READ
+    resource(v): "composer.elevator.MaintenanceSheet"
+    condition: (v.maintenanceFirm.getIdentifier() == m.getIdentifier())
+    action: ALLOW
+ }
+
+ rule MaintenanceFirmCanSeeOwnElevators {
+   description: "Allow maintenance firm to only see elevators they maintain"
+   participant(p): "composer.elevator.MaintenanceFirm"
+   operation: READ
+   resource(r): "composer.elevator.Elevator"
+   condition: (r.sheet.maintenanceFirm.getIdentifier() == p.getIdentifier())
+   action: ALLOW
+ }
+
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
