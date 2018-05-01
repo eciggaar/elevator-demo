@@ -208,6 +208,7 @@ function deploy_docker_app {
     popd
 }
 
+set_blockchain_env_variables
 install_nodejs
 install_jq
 if [[ "${HAS_COMPOSER_CONTRACTS}" = "true" ]]
@@ -218,7 +219,6 @@ then
     configure_composer_wallet
 fi
 #provision_blockchain
-set_blockchain_env_variables
 if [[ "${HAS_COMPOSER_CONTRACTS}" = "true" ]]
 then
     create_blockchain_network_card
