@@ -20,10 +20,10 @@ function provision_blockchain {
         cf create-service-key ${BLOCKCHAIN_SERVICE_INSTANCE} ${BLOCKCHAIN_SERVICE_KEY}
     fi
     cf service-key ${BLOCKCHAIN_SERVICE_INSTANCE} ${BLOCKCHAIN_SERVICE_KEY} | tail -n +2 > blockchain.json
-    export BLOCKCHAIN_NETWORK_ID=$(jq --raw-output '.org1."network_id"' blockchain.json)
-    export BLOCKCHAIN_KEY=$(jq --raw-output '.org1.key' blockchain.json)
-    export BLOCKCHAIN_SECRET=$(jq --raw-output '.org1.secret' blockchain.json)
-    export BLOCKCHAIN_URL=$(jq --raw-output '.org1.url' blockchain.json)
+    export BLOCKCHAIN_NETWORK_ID=$(jq --raw-output '.org1."network_id"' ${ARCHIVE_DIR}/blockchain.json)
+    export BLOCKCHAIN_KEY=$(jq --raw-output '.org1.key' ${ARCHIVE_DIR}/blockchain.json)
+    export BLOCKCHAIN_SECRET=$(jq --raw-output '.org1.secret' ${ARCHIVE_DIR}/blockchain.json)
+    export BLOCKCHAIN_URL=$(jq --raw-output '.org1.url' ${ARCHIVE_DIR}/blockchain.json)
 }
 
 function set_blockchain_env_variables {
