@@ -217,7 +217,7 @@ then
     create_cloudant_database
     configure_composer_wallet
 fi
-provision_blockchain
+#provision_blockchain
 if [[ "${HAS_COMPOSER_CONTRACTS}" = "true" ]]
 then
     create_blockchain_network_card
