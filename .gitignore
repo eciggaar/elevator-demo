@@ -3,7 +3,6 @@ node_modules
 credentials
 *.card
 composer-providers.json
-*.bna
 *DS_Store
 cardstore-cloudant.json
 .eslintrc.yml
