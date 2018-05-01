@@ -25,7 +25,7 @@ const path = require('path');
 require('chai').should();
 
 const namespace = 'composer.elevator';
-const assetType = 'SampleAsset';
+const assetType = 'Elevator';
 
 describe('#' + namespace, () => {
     // In-memory card store for testing so cards are not persisted to the file system
@@ -86,41 +86,4 @@ describe('#' + namespace, () => {
         // Connect to the business network using the network admin identity
         await businessNetworkConnection.connect(adminCardName);
     });
-
-    describe('ChangeAssetValue()', () => {
-        it('should change the value property of ' + assetType + ' to newValue', async () => {
-            const factory = businessNetworkConnection.getBusinessNetwork().getFactory();
-
-            // Create a user participant
-            const user = factory.newResource(namespace, 'User', 'Edward Ciggaar');
-
-            // Create the asset
-            const asset = factory.newResource(namespace, assetType, 'ASSET_001');
-            asset.value = 'old-value';
-
-            // Create a transaction to change the asset's value property
-            const changeAssetValue = factory.newTransaction(namespace, 'ChangeAssetValue');
-            changeAssetValue.relatedAsset = factory.newRelationship(namespace, assetType, asset.$identifier);
-            changeAssetValue.newValue = 'new-value';
-
-            let assetRegistry = await businessNetworkConnection.getAssetRegistry(namespace + '.' + assetType);
-
-            // Add the asset to the appropriate asset registry
-            await assetRegistry.add(asset);
-            let userRegistry = await businessNetworkConnection.getParticipantRegistry(namespace + '.User');
-
-            // Add the user to the appropriate participant registry
-            await userRegistry.add(user);
-
-            // Submit the transaction
-            await businessNetworkConnection.submitTransaction(changeAssetValue);
-
-            // Get the asset
-            let newAsset = await assetRegistry.get(asset.$identifier);
-
-            // Assert that the asset has the new value property
-            newAsset.value.should.equal(changeAssetValue.newValue);
-        });
-    });
-
 });
