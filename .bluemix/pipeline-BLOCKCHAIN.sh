@@ -26,6 +26,13 @@ function provision_blockchain {
     export BLOCKCHAIN_URL=$(jq --raw-output '.org1.url' blockchain.json)
 }
 
+function set_blockchain_env_variables {
+    export BLOCKCHAIN_NETWORK_ID=$(jq --raw-output '.org1."network_id"' blockchain.json)
+    export BLOCKCHAIN_KEY=$(jq --raw-output '.org1.key' blockchain.json)
+    export BLOCKCHAIN_SECRET=$(jq --raw-output '.org1.secret' blockchain.json)
+    export BLOCKCHAIN_URL=$(jq --raw-output '.org1.url' blockchain.json)    
+}
+
 function get_blockchain_connection_profile_inner {
     do_curl \
         -H 'Content-Type: application/json' \

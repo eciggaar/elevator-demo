@@ -113,7 +113,7 @@ function deploy_composer_rest_server {
         --no-manifest
     cf set-env ${CF_APP_NAME} NODE_CONFIG "${NODE_CONFIG}"
     cf set-env ${CF_APP_NAME} COMPOSER_CARD ${BUSINESS_NETWORK_CARD}
-    cf set-env ${CF_APP_NAME} COMPOSER_NAMESPACES required
+    cf set-env ${CF_APP_NAME} COMPOSER_NAMESPACES never
     cf set-env ${CF_APP_NAME} COMPOSER_WEBSOCKETS true
     cf start ${CF_APP_NAME}
     REST_SERVER_URL=$(cf app ${CF_APP_NAME} | grep routes: | awk '{print $2}')
@@ -218,6 +218,7 @@ then
     configure_composer_wallet
 fi
 #provision_blockchain
+set_blockchain_env_variables
 if [[ "${HAS_COMPOSER_CONTRACTS}" = "true" ]]
 then
     create_blockchain_network_card
