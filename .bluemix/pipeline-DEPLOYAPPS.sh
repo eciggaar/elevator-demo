@@ -3,6 +3,7 @@
 set -ex
 
 source .bluemix/pipeline-COMMON.sh
+source .bluemix/pipeline-CLOUDANT.sh
 
 export CONTRACTS=$(ls contracts)
 export APPS=$(ls apps)
@@ -211,6 +212,10 @@ install_jq
 if [[ "${HAS_COMPOSER_CONTRACTS}" = "true" ]]
 then
     install_composer
+    provision_cloudant
+    create_cloudant_database
+    configure_composer_wallet
+
 fi
 deploy_contracts
 deploy_apps
