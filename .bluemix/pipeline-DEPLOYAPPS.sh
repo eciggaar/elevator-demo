@@ -4,6 +4,7 @@ set -ex
 
 source .bluemix/pipeline-COMMON.sh
 source .bluemix/pipeline-CLOUDANT.sh
+source .bluemix/pipeline-BLOCKCHAIN.sh
 
 export CONTRACTS=$(ls contracts)
 export APPS=$(ls apps)
@@ -43,6 +44,8 @@ function deploy_composer_contract {
     BUSINESS_NETWORK_VERSION=$(jq --raw-output '.version' package.json)
     BUSINESS_NETWORK_ARCHIVES=$(ls dist/*.bna)
     BUSINESS_NETWORK_CARD=admin@${BUSINESS_NETWORK_NAME}
+    BLOCKCHAIN_NETWORK_CARD=adminCard
+    
     for BUSINESS_NETWORK_ARCHIVE in ${BUSINESS_NETWORK_ARCHIVES}
     do
         if ! OUTPUT=$(composer runtime install -c ${BLOCKCHAIN_NETWORK_CARD} -n ${BUSINESS_NETWORK_NAME} 2>&1)

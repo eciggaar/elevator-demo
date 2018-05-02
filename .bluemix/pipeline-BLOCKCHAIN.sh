@@ -8,7 +8,7 @@ export BLOCKCHAIN_SERVICE_NAME=ibm-blockchain-5-prod
 export BLOCKCHAIN_SERVICE_PLAN=ibm-blockchain-plan-v1-starter-prod
 #export BLOCKCHAIN_SERVICE_INSTANCE=blockchain-${IDS_PROJECT_NAME}
 export BLOCKCHAIN_SERVICE_KEY=Credentials-1
-export BLOCKCHAIN_NETWORK_CARD=admin@elevator-demo
+#export BLOCKCHAIN_NETWORK_CARD=admin@elevator-demo
 
 function provision_blockchain {
     if ! cf service ${BLOCKCHAIN_SERVICE_INSTANCE} > /dev/null 2>&1
@@ -133,7 +133,7 @@ function create_blockchain_network_card {
     get_blockchain_connection_profile
     export BLOCKCHAIN_NETWORK_ENROLL_ID=$(jq --raw-output 'limit(1;.certificateAuthorities[].registrar[0].enrollId)' blockchain-connection-profile.json)
     export BLOCKCHAIN_NETWORK_ENROLL_SECRET=$(jq --raw-output 'limit(1;.certificateAuthorities[].registrar[0].enrollSecret)' blockchain-connection-profile.json)
-    export BLOCKCHAIN_NETWORK_CARD=${BLOCKCHAIN_NETWORK_ENROLL_ID}@blockchain-network
+    export BLOCKCHAIN_NETWORK_CARD=adminCard
     if ! composer card list -n ${BLOCKCHAIN_NETWORK_CARD} > /dev/null 2>&1
     # 0.19.x - if ! composer card list -c ${BLOCKCHAIN_NETWORK_CARD} > /dev/null 2>&1
     then
