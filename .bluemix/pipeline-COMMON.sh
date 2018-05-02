@@ -14,7 +14,7 @@ function install_nodejs {
 }
 
 function install_composer {
-    npm install --save-dev grpc@1.10.1
+    npm install -g --save-dev grpc@1.10.1
     npm install -g composer-cli@0.18.1 @ampretia/composer-wallet-cloudant
 }
 
